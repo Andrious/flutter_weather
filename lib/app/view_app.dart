@@ -1,5 +1,5 @@
 // application's main app
-export 'view/app.dart';
+export 'view/weather_app.dart';
 
 // App's menu
 export 'view/menu/app_menu.dart';

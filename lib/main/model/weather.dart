@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:weather_repository/weather_repository.dart' hide Weather;
@@ -10,8 +11,10 @@ part 'weather_cubit.g.dart';
 
 part 'weather_state.dart';
 
+///
 enum TemperatureUnits { fahrenheit, celsius }
 
+///
 extension TemperatureUnitsX on TemperatureUnits {
   bool get isFahrenheit => this == TemperatureUnits.fahrenheit;
   bool get isCelsius => this == TemperatureUnits.celsius;

@@ -7,17 +7,16 @@ import '/src/view.dart';
 class AppMenu extends AppPopupMenu {
   /// Only one instance of the class
   factory AppMenu() => _this ??= AppMenu._();
-  static AppMenu? _this;
-
   AppMenu._()
-      : _con = ExampleAppController(),
+      : _con = WeatherAppController(),
         super(
           key: const Key('appMenuButton'),
           controller: AppMenuController(),
         );
+  static AppMenu? _this;
 
   /// The App's controller
-  final ExampleAppController _con;
+  final WeatherAppController _con;
 
   /// Supply the app's popupmenu
   /// a mutable menu
@@ -31,11 +30,6 @@ class AppMenu extends AppPopupMenu {
             child: Text(
                 '${'Interface:'.tr} ${App.useMaterial ? 'Material' : 'Cupertino'}'),
           ),
-        PopupMenuItem(
-          key: const Key('applicationMenuItem'),
-          value: 'application',
-          child: Text('${'Application:'.tr} ${_con.application}'),
-        ),
         if (App.allowChangeLocale)
           PopupMenuItem(
             key: const Key('localeMenuItem'),
@@ -66,19 +60,13 @@ class AppMenu extends AppPopupMenu {
 
   /// When an menu item is selected
   @override
-  void onSelected(String value) async {
+  Future<void> onSelected(String value) async {
     switch (value) {
-      case 'interface':
-        _con.changeUI();
-        break;
-      case 'application':
-        await _con.changeApp();
-        break;
       case 'locale':
-        _con.changeLocale();
+        await _con.changeLocale();
         break;
       case 'color':
-        _con.changeColor();
+        await _con.changeColor();
         break;
       case 'about':
         _con.aboutApp();
@@ -90,7 +78,9 @@ class AppMenu extends AppPopupMenu {
 
 /// Uses the String type as menu options
 class AppMenuController extends AppPopupMenuController {
+  ///
   factory AppMenuController() => _this ??= AppMenuController._();
-  static AppMenuController? _this;
   AppMenuController._();
+  static AppMenuController? _this;
+
 }

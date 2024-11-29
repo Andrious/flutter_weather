@@ -3,7 +3,9 @@ import 'package:weather_repository/weather_repository.dart' as r;
 
 import '/src/model.dart';
 
+///
 class WeatherPopulated extends StatelessWidget {
+  ///
   const WeatherPopulated({
     required this.weather,
     required this.units,
@@ -11,8 +13,11 @@ class WeatherPopulated extends StatelessWidget {
     super.key,
   });
 
+  ///
   final Weather weather;
+  ///
   final TemperatureUnits units;
+  ///
   final ValueGetter<Future<void>> onRefresh;
 
   @override

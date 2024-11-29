@@ -7,10 +7,11 @@ import '/src/model.dart' show Settings;
 import '/src/view.dart';
 
 ///
-class ExampleAppController extends AppController {
-  factory ExampleAppController() => _this ??= ExampleAppController._();
-  ExampleAppController._();
-  static ExampleAppController? _this;
+class WeatherAppController extends AppController {
+  ///
+  factory WeatherAppController() => _this ??= WeatherAppController._();
+  WeatherAppController._();
+  static WeatherAppController? _this;
 
   /// Use the Router Configuration or not
   bool useRouterConfig = false;
@@ -24,84 +25,7 @@ class ExampleAppController extends AppController {
   /// Error right at the start
   bool errorAtStartup = false;
 
-  // Assign to the 'leading' widget on the interface.
-  void leading() => changeUI();
-
-  /// Switch to the other User Interface.
-  void changeUI() {
-    //
-//    Navigator.popUntil(App.context!, ModalRoute.withName('/'));
-    App.popUntil(ModalRoute.withName('/'));
-
-    // This has to be called first.
-    App.changeUI(App.useMaterial ? 'Cupertino' : 'Material');
-
-    bool switchUI;
-    if (App.useMaterial) {
-      if (UniversalPlatform.isAndroid) {
-        switchUI = false;
-      } else {
-        switchUI = true;
-      }
-    } else {
-      if (UniversalPlatform.isAndroid) {
-        switchUI = true;
-      } else {
-        switchUI = false;
-      }
-    }
-    Prefs.setBool('switchUI', switchUI);
-  }
-
-  /// Allow to switch Interface
-  bool get switchUI => Prefs.getBool('switchUI');
-
-  /// Indicate if the Counter app is to run.
-  bool get counterApp => _appNames[_appCount] == 'Counter';
-
-  /// Indicate if the Words app is to run.
-  bool get wordsApp => _appNames[_appCount] == 'Word Pairs';
-
-  /// Indicate if the Contacts app is to run.
-  bool get contactsApp => _appNames[_appCount] == 'Contacts';
-
-  int _appCount = 0;
-//  final _appNames = ['Counter', 'Word Pairs', 'Contacts', 'Inherited'];
-  final _appNames = ['Counter', 'Word Pairs', 'Inherited'];
-
-  // Supply what the interface
-  String get application => _appNames[_appCount];
-
-  /// Switch to the other application.
-  Future<void> changeApp([String? appName = '']) async {
-    //
-    if (appName == null ||
-        appName.isEmpty ||
-        !_appNames.contains(appName.trim())) {
-      //
-      _appCount++;
-
-      if (_appCount == _appNames.length) {
-        _appCount = 0;
-      }
-    } else {
-      _appCount = _appNames.indexOf(appName.trim());
-    }
-
-    // Possibly running in a test and can't run the Contacts app
-    // There's no sqlite in the test environment
-    if (App.inFlutterTest && _appCount == 2) {
-      _appCount = 0;
-    }
-
-    await Prefs.setBool('words', _appNames[_appCount] == 'Word');
-
-    // Rerun the whole app with App.setState(() {})
-    await Prefs.setInt('appRun', _appCount);
-
-    App.setState(() {});
-  }
-
+   ///
   Future<void> changeLocale() async {
     //
     final appState = rootState! as AppState;
@@ -154,6 +78,7 @@ class ExampleAppController extends AppController {
     );
   }
 
+  ///
   void aboutApp() => showAboutDialog(
         context: App.context!,
         applicationName: App.appState?.title ?? '',
@@ -172,11 +97,6 @@ class ExampleAppController extends AppController {
             value: 'interface',
             child: Text(
                 '${'Interface:'.tr} ${App.useMaterial ? 'Material' : 'Cupertino'}'),
-          ),
-          PopupMenuItem(
-            key: const Key('applicationMenuItem'),
-            value: 'application',
-            child: Text('${'Application:'.tr} $application'),
           ),
           PopupMenuItem(
             key: const Key('localeMenuItem'),
@@ -198,17 +118,11 @@ class ExampleAppController extends AppController {
         ],
         inSelected: (String value) async {
           switch (value) {
-            case 'interface':
-              changeUI();
-              break;
-            case 'application':
-              changeApp();
-              break;
             case 'locale':
-              changeLocale();
+              await changeLocale();
               break;
             case 'color':
-              changeColor();
+              await changeColor();
               break;
             case 'about':
               aboutApp();
@@ -355,33 +269,41 @@ class ExampleAppController extends AppController {
   /// when a phone is rotated.
   @override
   void didChangeMetrics() {
-    if (inDebugMode) {
-      debugPrint('############ Event: didChangeMetrics() in $this');
-    }
+    assert(() {
+      debugPrint(
+          '############ Event: didChangeMetrics() in $this');
+      return true;
+    }());
   }
 
   /// Called when the platform's text scale factor changes.
   @override
   void didChangeTextScaleFactor() {
-    if (inDebugMode) {
-      debugPrint('############ Event: didChangeTextScaleFactor() in $this');
-    }
+    assert(() {
+      debugPrint(
+          '############ Event: didChangeTextScaleFactor() in $this');
+      return true;
+    }());
   }
 
   /// Brightness changed.
   @override
   void didChangePlatformBrightness() {
-    if (inDebugMode) {
-      debugPrint('############ Event: didChangePlatformBrightness() in $this');
-    }
+    assert(() {
+      debugPrint(
+          '############ Event: didChangePlatformBrightness() in $this');
+      return true;
+    }());
   }
 
   /// Called when the system tells the app that the user's locale has changed.
   @override
   void didChangeLocales(List<Locale>? locales) {
-    if (inDebugMode) {
-      debugPrint('############ Event: didChangeLocale() in $this');
-    }
+    assert(() {
+      debugPrint(
+          '############ Event: didChangeLocale() in $this');
+      return true;
+    }());
   }
 
   @override
@@ -391,26 +313,30 @@ class ExampleAppController extends AppController {
     /// AppLifecycleState.paused (may enter the suspending state at any time)
     /// AppLifecycleState.detach
     /// AppLifecycleState.resume
-    if (inDebugMode) {
+    assert(() {
       debugPrint(
           '############ Event: didChangeAppLifecycleState() in ${this.state} for $this');
-    }
+      return true;
+    }());
   }
 
   /// Called when the system is running low on memory.
   @override
   void didHaveMemoryPressure() {
-    if (inDebugMode) {
-      debugPrint('############ Event: didHaveMemoryPressure() in $this');
-    }
+    assert(() {
+      debugPrint(
+          '############ Event: didHaveMemoryPressure() in $this');
+      return true;
+    }());
   }
 
   /// Called when the system changes the set of active accessibility features.
   @override
   void didChangeAccessibilityFeatures() {
-    if (inDebugMode) {
+    assert(() {
       debugPrint(
           '############ Event: didChangeAccessibilityFeatures() in $this');
-    }
+      return true;
+    }());
   }
 }

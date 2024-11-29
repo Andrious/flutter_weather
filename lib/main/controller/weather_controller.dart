@@ -10,17 +10,25 @@ import 'package:weather_repository/weather_repository.dart' as repo;
 
 ///
 class WeatherController extends StateXController {
+  ///
   factory WeatherController() => _this ??= WeatherController._();
 
   WeatherController._()
       : _weatherRepository = repo.WeatherRepository(),
-        weatherState = m.WeatherState();
+        _weatherState = m.WeatherState();
 
   static WeatherController? _this;
 
   final repo.WeatherRepository _weatherRepository;
 
-  m.WeatherState weatherState;
+  /// Immutable access to the State of Weather object
+  m.WeatherState get stateOfWeather => _weatherState;
+
+  /// Immutable access to the State of Weather object
+  m.WeatherStatus get weatherStatus => _weatherState.status;
+
+  /// State of the weather
+  m.WeatherState _weatherState;
 
   static const _cityKey = 'weather_city';
 
@@ -35,14 +43,15 @@ class WeatherController extends StateXController {
     //
     final isCelsius = Prefs.getBool(_unitKey, true);
 
-    if(!isCelsius){
-      weatherState = weatherState.copyWith(temperatureUnits: m.TemperatureUnits.fahrenheit);
+    if (!isCelsius) {
+      _weatherState = _weatherState.copyWith(
+          temperatureUnits: m.TemperatureUnits.fahrenheit);
     }
 
     //
     final city = Prefs.getString(_cityKey);
 
-    if(city.isNotEmpty) {
+    if (city.isNotEmpty) {
       //
       await _weatherUpdate(city);
     }
@@ -57,37 +66,42 @@ class WeatherController extends StateXController {
     return init;
   }
 
+  /// Supply the Weather data object
+  m.Weather get weather => _weatherState.weather;
 
   /// Fetch the weather from the specified city via a public API
   Future<void> fetchWeather(String? city) async {
     //
-    if (city == null || city.trim().isEmpty) return;
+    if (city == null || city.trim().isEmpty) {
+      return;
+    }
 
     // emit(weatherState.copyWith(status: m.WeatherStatus.loading));
-    weatherState = m.WeatherState(status: m.WeatherStatus.loading);
+    _weatherState = m.WeatherState(
+      status: m.WeatherStatus.loading,
+      weather: _weatherState.weather,
+    );
 
     // Display the loading status
-    setState((){});
+    setState(() {});
 
     //
     await _weatherUpdate(city);
   }
 
-
   ///
   Future<void> refreshWeather() async {
     //
-    if (!weatherState.status.isSuccess) {
+    if (!_weatherState.status.isSuccess) {
       return;
     }
     //
-    if (weatherState.weather == m.Weather.empty) {
+    if (_weatherState.weather == m.Weather.empty) {
       return;
     }
     //
-    await _weatherUpdate(weatherState.weather.location);
+    await _weatherUpdate(_weatherState.weather.location);
   }
-
 
   //
   Future<void> _weatherUpdate(String? city) async {
@@ -96,17 +110,21 @@ class WeatherController extends StateXController {
       return;
     }
 
+    bool conditionChange = false;
+
     try {
       //
-      repo.Weather w = await _weatherRepository.getWeather(city);
+      final repo.Weather w = await _weatherRepository.getWeather(city);
 
       final weather = m.Weather.fromRepository(w);
 
-      final units = weatherState.temperatureUnits;
+      final units = _weatherState.temperatureUnits;
 
       final value = units.isFahrenheit
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
+
+      conditionChange = _weatherState.weather.condition != weather.condition;
 
       // emit(
       //   weatherState.copyWith(
@@ -115,41 +133,49 @@ class WeatherController extends StateXController {
       //     weather: weather.copyWith(temperature: m.Temperature(value: value)),
       //   ),
       // );
-      weatherState = m.WeatherState(
+      _weatherState = m.WeatherState(
         status: m.WeatherStatus.success,
         temperatureUnits: units,
         weather: weather.copyWith(temperature: m.Temperature(value: value)),
       );
     } on Exception {
       // emit(weatherState.copyWith(status: m.WeatherStatus.failure));
-      weatherState = weatherState.copyWith(status: m.WeatherStatus.failure);
+      _weatherState = _weatherState.copyWith(status: m.WeatherStatus.failure);
     }
 
     // Save the location
-    await Prefs.setString(_cityKey, weatherState.weather.location);
+    await Prefs.setString(_cityKey, _weatherState.weather.location);
 
-    //
-    setState((){});
+    // Update the location and temperature
+    setState(() {});
+
+    // Update the background color.
+    if(conditionChange) {
+      rootState?.setState(() {});
+    }
   }
+
+  /// Determine if Celsius is used or not
+  bool get isCelsius => _weatherState.temperatureUnits.isCelsius;
 
   ///
   void toggleUnits() {
     //
     // Save temperature units to be used
-    Prefs.setBool(_unitKey, !weatherState.temperatureUnits.isCelsius);
+    Prefs.setBool(_unitKey, !_weatherState.temperatureUnits.isCelsius);
 
-    final units = weatherState.temperatureUnits.isFahrenheit
+    final units = _weatherState.temperatureUnits.isFahrenheit
         ? m.TemperatureUnits.celsius
         : m.TemperatureUnits.fahrenheit;
 
-    if (!weatherState.status.isSuccess) {
+    if (!_weatherState.status.isSuccess) {
       // emit(state.copyWith(temperatureUnits: units));
-      weatherState = weatherState.copyWith(temperatureUnits: units);
-      setState((){});
+      _weatherState = _weatherState.copyWith(temperatureUnits: units);
+      setState(() {});
       return;
     }
 
-    final weather = weatherState.weather;
+    final weather = _weatherState.weather;
 
     if (weather != m.Weather.empty) {
       //
@@ -164,14 +190,14 @@ class WeatherController extends StateXController {
       //     weather: weather.copyWith(temperature: Temperature(value: value)),
       //   ),
       // );
-      weatherState = weatherState.copyWith(
+      _weatherState = _weatherState.copyWith(
         temperatureUnits: units,
         weather: weather.copyWith(
           temperature: m.Temperature(value: value),
         ),
       );
       //
-      setState((){});
+      setState(() {});
     }
   }
 

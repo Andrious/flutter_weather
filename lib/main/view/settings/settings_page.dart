@@ -5,12 +5,15 @@ import '/src/controller.dart';
 
 import '/src/model.dart';
 
+import '/src/view.dart';
 
+///
 class SettingsPage extends StatelessWidget {
-  SettingsPage._() : con = WeatherController();
+  SettingsPage._() : _con = WeatherController();
 
-  final WeatherController con;
+  final WeatherController _con;
 
+  ///
   static Route<void> route() {
     return MaterialPageRoute<void>(
       builder: (_) => SettingsPage._(),
@@ -27,9 +30,9 @@ class SettingsPage extends StatelessWidget {
           //   buildWhen: (previous, current) =>
           //       previous.temperatureUnits != current.temperatureUnits,
           //   builder: (context, state) {
+          //       isThreeLine: true,
           //     return ListTile(
           //       title: const Text('Temperature Units'),
-          //       isThreeLine: true,
           //       subtitle: const Text(
           //         'Use metric measurements for temperature units.',
           //       ),
@@ -46,10 +49,10 @@ class SettingsPage extends StatelessWidget {
             subtitle:
                 const Text('Use metric measurements for temperature units.'),
             // Call con.setState((){}) will call this builder again.
-            trailing: con.setBuilder(
+            trailing: _con.setBuilder(
               (_) => Switch(
-                value: con.weatherState.temperatureUnits.isCelsius,
-                onChanged: (_) => con.toggleUnits(),
+                value: _con.isCelsius,
+                onChanged: (_) => _con.toggleUnits(),
               ),
             ),
           ),

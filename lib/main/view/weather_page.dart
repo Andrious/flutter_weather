@@ -9,7 +9,9 @@ import '/src/model.dart';
 
 import '/src/view.dart';
 
+///
 class WeatherPage extends StatefulWidget {
+  ///
   const WeatherPage({super.key});
   @override
   State<StatefulWidget> createState() => _WeatherPageState();
@@ -42,8 +44,8 @@ class _WeatherPageState extends StateX<WeatherPage> {
         // Only this part of the interface will ever rebuild.
         child: setBuilder(
           (_) {
-            final state = con.weatherState;
-            switch (state.status) {
+            final status = con.weatherStatus;
+            switch (status) {
               case WeatherStatus.initial:
                 return const WeatherEmpty();
               case WeatherStatus.loading:
@@ -51,6 +53,7 @@ class _WeatherPageState extends StateX<WeatherPage> {
               case WeatherStatus.failure:
                 return const WeatherError();
               case WeatherStatus.success:
+                final state = con.stateOfWeather;
                 return WeatherPopulated(
                   weather: state.weather,
                   units: state.temperatureUnits,
@@ -66,14 +69,15 @@ class _WeatherPageState extends StateX<WeatherPage> {
         child: const Icon(Icons.search, semanticLabel: 'Search'),
         onPressed: () async {
           final city = await Navigator.of(context).push(SearchPage.route());
-          if (!context.mounted) return;
-          await con.fetchWeather(city);
+          if (context.mounted) {
+            await con.fetchWeather(city);
+          }
         },
       ),
     );
   }
 
-  /// Set it to false and try a new city. It won't work.
+  /// Set it to return false and try a new city. It won't work.
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
 }

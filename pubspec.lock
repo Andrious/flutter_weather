@@ -165,10 +165,10 @@ packages:
     dependency: "direct main"
     description:
       name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -317,9 +317,10 @@ packages:
   fluttery_framework:
     dependency: "direct main"
     description:
-      path: "../../packages/fluttery_framework"
-      relative: true
-    source: path
+      name: fluttery_framework
+      sha256: "8b643481e2c4cf8648b221c5fa1e6786de3f3a94b207853a83fa196b1cc6f099"
+      url: "https://pub.dev"
+    source: hosted
     version: "5.4.0+1"
   fuchsia_remote_debug_protocol:
     dependency: transitive
@@ -330,10 +331,10 @@ packages:
     dependency: transitive
     description:
       name: go_router
-      sha256: "8ae664a70174163b9f65ea68dd8673e29db8f9095de7b5cd00e167c621f4fef5"
+      sha256: "8660b74171fafae4aa8202100fa2e55349e078281dadc73a241eb8e758534d9d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.6.0"
+    version: "14.6.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -511,10 +512,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: c464428172cb986b758c6d1724c603097febb8fb855aa265aeecc9280c294d4a
+      sha256: "8c4967f8b7cb46dc914e178daa29813d83ae502e0529d7b0478330616a691ef7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.12"
+    version: "2.2.14"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -692,10 +693,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "4468b24876d673418a7b7147e5a08a715b4998a7ae69227acafaab762e0e5490"
+      sha256: "761b9740ecbd4d3e66b8916d784e581861fd3c3553eda85e167bc49fdb68f709"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.4+5"
+    version: "2.5.4+6"
   sqflite_darwin:
     dependency: transitive
     description:
@@ -723,10 +724,11 @@ packages:
   state_extended:
     dependency: transitive
     description:
-      path: "../../packages/state_extended"
-      relative: true
-    source: path
-    version: "5.7.0"
+      name: state_extended
+      sha256: "39c50301b1e8d58a08116553919a04889d8f2c694557a536e387bc329473def2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.8.0"
   stream_channel:
     dependency: transitive
     description:

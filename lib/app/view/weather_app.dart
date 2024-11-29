@@ -1,4 +1,4 @@
-//
+// ignore_for_file: unnecessary_overrides
 import '/src/controller.dart';
 
 import '/src/model.dart' as m;
@@ -8,49 +8,39 @@ import '/src/view.dart';
 import 'package:weather_repository/weather_repository.dart' as r;
 
 /// App
-class FlutteryExampleApp extends AppStatefulWidget {
-  FlutteryExampleApp({super.key});
+class WeatherApp extends AppStatefulWidget {
+  ///
+  WeatherApp({super.key});
   // This is the 'App State object' of the application.
   @override
-  AppState createAppState() => _ExampleAppState();
+  AppState createAppState() => _WeatherAppState();
 }
 
 /// This is the 'View' of the application.
 /// The 'look and behavior' of the app.
 ///
-class _ExampleAppState extends AppState {
-  _ExampleAppState()
+class _WeatherAppState extends AppState {
+  _WeatherAppState()
       : super(
-          controller: ExampleAppController(),
-          inTitle: () => 'Demo App',
+          controller: WeatherAppController(),
           debugShowCheckedModeBanner: false,
-          switchUI: ExampleAppController().switchUI,
-          useRouterConfig: ExampleAppController().useRouterConfig,
+          useRouterConfig: WeatherAppController().useRouterConfig,
           errorScreen: defaultErrorWidgetBuilder,
-          inTheme: () {
-            m.Weather weather = WeatherController().weatherState.weather;
-            final seedColor = weather.toColor;
-            return ThemeData(
-              appBarTheme: const AppBarTheme(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-              ),
-              colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
-              textTheme: GoogleFonts.rajdhaniTextTheme(),
-            );
-          },
+          inTheme: () => ThemeData(
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: WeatherController().weather.toColor,
+            ),
+            textTheme: GoogleFonts.rajdhaniTextTheme(),
+          ),
           onNavigationNotification: (notification) {
             if (kDebugMode) {
               debugPrint('############ Event: onNavigationNotification()');
             }
             return notification.canHandlePop;
-          },
-          onUnknownRoute: (settings) {
-            Route<dynamic>? route;
-            if (kDebugMode) {
-              debugPrint('############ Event: onUnknownRoute()');
-            }
-            return route;
           },
           inSupportedLocales: () {
             /// The app's translations
@@ -70,17 +60,12 @@ class _ExampleAppState extends AppState {
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
           ],
-          allowChangeTheme: true, // Allow the App's theme to change
-          allowChangeLocale: true, // Allow the app to change locale
-          allowChangeUI: true, // Allow the app to change its design interface
-          inInitAsync: () => Future.value(true), // Demonstration purposes
-          inInitState: () {/* Optional inInitState() function */},
           inErrorHandler: (details) {
             //
             final appState = App.appState!;
             // You see? appState is this object!
             assert(() {
-              if (appState is _ExampleAppState) {
+              if (appState is _WeatherAppState) {
                 debugPrint(
                     '=========== inErrorHandler: appState is _ExampleAppState');
               }
@@ -100,11 +85,12 @@ class _ExampleAppState extends AppState {
                   '=========== inErrorHandler: details == lastErrorDetails');
             }
           },
-          inHome: () => const WeatherPage(),
+          home: const WeatherPage(),
         );
 
+  ///
   @override
-  onOnNavigationNotification(notification) {
+  bool onOnNavigationNotification(notification) {
     if (kDebugMode) {
       debugPrint('############ Event: Navigation change.');
     }
@@ -116,14 +102,13 @@ class _ExampleAppState extends AppState {
   Widget build(BuildContext context) => super.build(context);
 
   @override
-  // ignore: unnecessary_overrides
   void onErrorHandler(FlutterErrorDetails details) {
     //
     final appState = App.appState!;
     // You see? appState is this object!
     assert(() {
       // ignore: unnecessary_type_check
-      if (this is _ExampleAppState && appState is _ExampleAppState) {
+      if (this is _WeatherAppState && appState is _WeatherAppState) {
         debugPrint(
             '=========== onErrorHandler: this is _ExampleAppState && appState is _ExampleAppState');
       }
@@ -131,7 +116,7 @@ class _ExampleAppState extends AppState {
     }());
 
     // Retrieve the last Flutter Error that has occurred.
-    var lastErrorDetails = lastFlutterErrorDetails;
+    final lastErrorDetails = lastFlutterErrorDetails;
 
     // You see? appState is this object!
     assert(() {
@@ -147,33 +132,28 @@ class _ExampleAppState extends AppState {
   }
 
   @override
-  // ignore: unnecessary_overrides
   void onError(FlutterErrorDetails details) {
     // This is the app's State object's error routine.
     super.onError(details);
   }
 
   @override
-  // ignore: unnecessary_overrides
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     return super.updateShouldNotify(oldWidget);
   }
 
   @override
-  // ignore: unnecessary_overrides
   bool dependOnInheritedWidget(BuildContext? context) {
     return super.dependOnInheritedWidget(context);
   }
 
   @override
-  // ignore: unnecessary_overrides
   void deactivate() {
     // Place a breakpoint to see how this works
     super.deactivate();
   }
 
   @override
-  // ignore: unnecessary_overrides
   void dispose() {
     // Place a breakpoint to see how this works
     super.dispose();

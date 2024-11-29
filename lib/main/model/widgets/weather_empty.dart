@@ -1,7 +1,9 @@
 //
 import '/src/view.dart';
 
+///
 class WeatherEmpty extends StatelessWidget {
+  ///
   const WeatherEmpty({super.key});
 
   @override

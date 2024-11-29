@@ -19,7 +19,7 @@ class MaterialVersionRadioButtons extends RadioButtons<bool> {
       MaterialController(),
       mainAxisSize: MainAxisSize.min,
     );
-    List<Widget> widgets = [Text('Material Ver.'.tr)];
+    final List<Widget> widgets = [Text('Material Ver.'.tr)];
     widgets.addAll(radios);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,6 +54,7 @@ class MaterialVersionRadioButtons extends RadioButtons<bool> {
 
 /// Supplies the initial value and callbacks when a new selection
 class MaterialController extends RadioButtonsController<bool> {
+  ///
   factory MaterialController() => _this ??= MaterialController._();
   MaterialController._();
   static MaterialController? _this;

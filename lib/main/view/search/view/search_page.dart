@@ -1,9 +1,10 @@
 //
 import '/src/view.dart';
 
+///
 class SearchPage extends StatefulWidget {
   const SearchPage._();
-
+  ///
   static Route<String> route() {
     return MaterialPageRoute(builder: (_) => const SearchPage._());
   }
