@@ -56,9 +56,6 @@ class WeatherController extends StateXController {
       await _weatherUpdate(city);
     }
 
-    //
-    state?.add(MaterialController());
-
     if (inDebugMode) {
       debugPrint('############ Event: initAsync() in $this');
     }

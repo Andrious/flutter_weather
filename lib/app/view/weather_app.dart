@@ -22,9 +22,8 @@ class WeatherApp extends AppStatefulWidget {
 class _WeatherAppState extends AppState {
   _WeatherAppState()
       : super(
-          controller: WeatherAppController(),
+          controller: AppController(),
           debugShowCheckedModeBanner: false,
-          useRouterConfig: WeatherAppController().useRouterConfig,
           errorScreen: defaultErrorWidgetBuilder,
           inTheme: () => ThemeData(
             appBarTheme: const AppBarTheme(
@@ -99,10 +98,8 @@ class _WeatherAppState extends AppState {
 
   /// Place a breakpoint here and see how it works
   @override
-  Widget build(BuildContext context) => super.build(context);
-
-  @override
   void onErrorHandler(FlutterErrorDetails details) {
+
     //
     final appState = App.appState!;
     // You see? appState is this object!
@@ -131,35 +128,45 @@ class _WeatherAppState extends AppState {
     }());
   }
 
+  /// Place a breakpoint here and see how it works
   @override
   void onError(FlutterErrorDetails details) {
     // This is the app's State object's error routine.
     super.onError(details);
   }
 
+  /// Place a breakpoint here and see how it works
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     return super.updateShouldNotify(oldWidget);
   }
 
+  /// Place a breakpoint here and see how it works
   @override
   bool dependOnInheritedWidget(BuildContext? context) {
     return super.dependOnInheritedWidget(context);
   }
 
+  /// Place a breakpoint here and see how it works
   @override
   void deactivate() {
     // Place a breakpoint to see how this works
     super.deactivate();
   }
 
+  /// Place a breakpoint here and see how it works
   @override
   void dispose() {
     // Place a breakpoint to see how this works
     super.dispose();
   }
+
+  /// Place a breakpoint here and see how it works
+  @override
+  Widget build(BuildContext context) => super.build(context);
 }
 
+/// Place a breakpoint here and see how it works
 extension on m.Weather {
   Color get toColor {
     switch (condition) {

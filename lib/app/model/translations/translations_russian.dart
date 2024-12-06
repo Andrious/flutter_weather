@@ -1,4 +1,4 @@
-//
+///
 Map<String, String> ruRU = {
   'Demo App': 'Демонстрационное приложение',
   'Counter Page Demo': 'Демонстрационная страница счетчика',
@@ -43,4 +43,5 @@ Map<String, String> ruRU = {
   'New Cats': 'Новые кошки',
   'New Foxes': 'Новые Лисы',
   'New Birds': 'Новые птицы',
+  'Use metric measurements for temperature units.':'Используйте метрические единицы измерения температуры.',
 };

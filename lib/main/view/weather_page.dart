@@ -37,7 +37,6 @@ class _WeatherPageState extends StateX<WeatherPage> {
               SettingsPage.route(),
             ),
           ),
-          AppMenu(),
         ],
       ),
       body: Center(
@@ -68,7 +67,7 @@ class _WeatherPageState extends StateX<WeatherPage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.search, semanticLabel: 'Search'),
         onPressed: () async {
-          final city = await Navigator.of(context).push(SearchPage.route());
+          final city = await App.push(SearchPage.route());
           if (context.mounted) {
             await con.fetchWeather(city);
           }

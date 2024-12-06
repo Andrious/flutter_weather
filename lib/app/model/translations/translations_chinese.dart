@@ -1,4 +1,4 @@
-//
+///
 Map<String, String> zhCN = {
   'Demo App': '演示应用',
   'Counter Page Demo': '计数器页面演示',
@@ -41,4 +41,5 @@ Map<String, String> zhCN = {
   'New Cats': '新猫',
   'New Foxes': '新狐狸',
   'New Birds': '新鸟',
+  'Use metric measurements for temperature units.': '使用公制作为温度单位。',
 };

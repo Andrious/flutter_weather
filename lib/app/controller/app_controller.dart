@@ -1,5 +1,5 @@
 //
-import '/src/controller.dart';
+import 'package:fluttery_framework/controller.dart' as c;
 
 import '/src/model.dart' show Settings;
 
@@ -7,14 +7,11 @@ import '/src/model.dart' show Settings;
 import '/src/view.dart';
 
 ///
-class WeatherAppController extends AppController {
+class AppController extends c.AppController {
   ///
-  factory WeatherAppController() => _this ??= WeatherAppController._();
-  WeatherAppController._();
-  static WeatherAppController? _this;
-
-  /// Use the Router Configuration or not
-  bool useRouterConfig = false;
+  factory AppController() => _this ??= AppController._();
+  AppController._();
+  static AppController? _this;
 
   /// Error in builder()
   bool errorInBuilder = false;
@@ -25,114 +22,17 @@ class WeatherAppController extends AppController {
   /// Error right at the start
   bool errorAtStartup = false;
 
-   ///
-  Future<void> changeLocale() async {
-    //
-    final appState = rootState! as AppState;
-
-    final locale = appState.locale!;
-
-    final locales = appState.supportedLocales;
-
-    // record selected locale
-    Locale? appLocale;
-
-    final spinner = SpinnerCupertino<Locale>(
-      initValue: locale,
-      values: locales,
-      itemBuilder: (BuildContext context, int index) => Text(
-        locales[index].countryCode == null
-            ? locales[index].languageCode
-            : '${locales[index].languageCode}-${locales[index].countryCode}',
-        style: const TextStyle(fontSize: 20),
-      ),
-      onSelectedItemChanged: (int index) async {
-        appLocale = L10n.getLocale(index);
-      },
-    );
-
-    await DialogBox(
-      context: appState.lastContext!,
-      title: 'Current Language'.tr,
-      body: [spinner],
-      press01: () {},
-      press02: () => App.changeLocale(appLocale),
-      switchButtons: Settings.getLeftHanded(),
-    ).show();
-  }
-
-  /// Change the app's colour theme
-  Future<void> changeColor() async {
-    // Get the current colour.
-    ColorPicker.color = Color(App.themeData!.primaryColor.value);
-
-    await ColorPicker.showColorPicker(
-      context: App.context!,
-      onColorChange: (Color value) {
-        /// Implement to take in a color change.
-      },
-      onChange: ([ColorSwatch<int?>? value]) {
-        App.setThemeData(swatch: value);
-        App.setState(() {});
-      },
-    );
-  }
-
-  ///
-  void aboutApp() => showAboutDialog(
-        context: App.context!,
-        applicationName: App.appState?.title ?? '',
-        applicationVersion: 'version: ${App.version} build: ${App.buildNumber}',
-      );
-
-  /// Supply the app's popupmenu
-  /// an immutable menu
-  Widget get menu => AppPopupMenu(
-        key: const Key('appMenuButton'),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        position: PopupMenuPosition.under,
-        menuEntries: [
-          PopupMenuItem(
-            key: const Key('interfaceMenuItem'),
-            value: 'interface',
-            child: Text(
-                '${'Interface:'.tr} ${App.useMaterial ? 'Material' : 'Cupertino'}'),
-          ),
-          PopupMenuItem(
-            key: const Key('localeMenuItem'),
-            value: 'locale',
-            child: Text(
-                '${'Locale:'.tr} ${App.appState!.locale!.toLanguageTag()}'),
-          ),
-          if (App.useMaterial)
-            PopupMenuItem(
-              key: const Key('colorMenuItem'),
-              value: 'color',
-              child: L10n.t('Colour Theme'),
-            ),
-          PopupMenuItem(
-            key: const Key('aboutMenuItem'),
-            value: 'about',
-            child: L10n.t('About'),
-          ),
-        ],
-        inSelected: (String value) async {
-          switch (value) {
-            case 'locale':
-              await changeLocale();
-              break;
-            case 'color':
-              await changeColor();
-              break;
-            case 'about':
-              aboutApp();
-              break;
-            default:
-          }
-        },
-      );
 
   /// **************  Life cycle events ****************
+
+  @override
+  void initState() {
+    super.initState();
+    assert(() {
+      debugPrint('############ Event: didChangeLocale() in $this');
+      return true;
+    }());
+  }
 
   /// Called to complete any asynchronous operations.
   @override
@@ -143,9 +43,6 @@ class WeatherAppController extends AppController {
       initAsyncError = false;
       throw Exception('Error in initAsync()!');
     }
-
-    //
-    state?.add(MaterialController());
 
     if (inDebugMode) {
       debugPrint('############ Event: initAsync() in $this');
@@ -270,8 +167,7 @@ class WeatherAppController extends AppController {
   @override
   void didChangeMetrics() {
     assert(() {
-      debugPrint(
-          '############ Event: didChangeMetrics() in $this');
+      debugPrint('############ Event: didChangeMetrics() in $this');
       return true;
     }());
   }
@@ -280,8 +176,7 @@ class WeatherAppController extends AppController {
   @override
   void didChangeTextScaleFactor() {
     assert(() {
-      debugPrint(
-          '############ Event: didChangeTextScaleFactor() in $this');
+      debugPrint('############ Event: didChangeTextScaleFactor() in $this');
       return true;
     }());
   }
@@ -290,8 +185,7 @@ class WeatherAppController extends AppController {
   @override
   void didChangePlatformBrightness() {
     assert(() {
-      debugPrint(
-          '############ Event: didChangePlatformBrightness() in $this');
+      debugPrint('############ Event: didChangePlatformBrightness() in $this');
       return true;
     }());
   }
@@ -300,8 +194,7 @@ class WeatherAppController extends AppController {
   @override
   void didChangeLocales(List<Locale>? locales) {
     assert(() {
-      debugPrint(
-          '############ Event: didChangeLocale() in $this');
+      debugPrint('############ Event: didChangeLocale() in $this');
       return true;
     }());
   }
@@ -324,8 +217,7 @@ class WeatherAppController extends AppController {
   @override
   void didHaveMemoryPressure() {
     assert(() {
-      debugPrint(
-          '############ Event: didHaveMemoryPressure() in $this');
+      debugPrint('############ Event: didHaveMemoryPressure() in $this');
       return true;
     }());
   }

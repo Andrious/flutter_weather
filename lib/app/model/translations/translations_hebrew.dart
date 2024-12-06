@@ -1,4 +1,4 @@
-//
+///
 Map<String, String> heIL = {
   'Demo App': 'אפליקציית הדגמה',
   'Counter Page Demo': 'הדגמת עמוד נגדי',
@@ -42,4 +42,5 @@ Map<String, String> heIL = {
   'New Cats': 'חתולים חדשים',
   'New Foxes': 'שועלים חדשים',
   'New Birds': 'ציפורים חדשות',
+  'Use metric measurements for temperature units.':'השתמש במדידות מטריות עבור יחידות טמפרטורה.',
 };

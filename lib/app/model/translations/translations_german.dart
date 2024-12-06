@@ -1,4 +1,4 @@
-//
+///
 Map<String, String> deDE = {
   'Demo App': 'Demo-App',
   'Counter Page Demo': 'Zählerseiten-Demo',
@@ -43,4 +43,5 @@ Map<String, String> deDE = {
   'New Cats': 'Neue Katzen',
   'New Foxes': 'Neue Füchse',
   'New Birds': 'Neue Vögel',
+  'Use metric measurements for temperature units.':'Verwenden Sie metrische Maße für Temperatureinheiten.',
 };

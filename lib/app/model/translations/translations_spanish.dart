@@ -1,4 +1,4 @@
-//
+///
 Map<String, String> esAR = {
   'Demo App': 'Aplicación de demostración',
   'Counter Page Demo': 'Demostración de página de contador',
@@ -42,4 +42,5 @@ Map<String, String> esAR = {
   'New Cats': 'Nuevos gatos',
   'New Foxes': 'Nuevos zorros',
   'New Birds': 'Nuevas aves',
+  'Use metric measurements for temperature units.':'Utilice medidas métricas para las unidades de temperatura.',
 };
