@@ -3,7 +3,7 @@ description: Create a production-ready Flutter App using a 'framework' full of f
 homepage: https://www.andrioussolutions.com
 repository: https://github.com/AndriousSolutions/flutter_framework/example
 
-version: 2.1.0
+version: 2.2.0+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -37,7 +37,7 @@ dependencies:
 
   # https://pub.dev/packages/fluttery_framework
   fluttery_framework: ^5.0.0
-  #   path: ../../packages/fluttery_framework
+#     path: ../../packages/fluttery_framework
 
   # https://pub.dev/packages/google_fonts
   google_fonts: ^6.0.0
@@ -66,7 +66,7 @@ dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
   flutter_test:
     sdk: flutter

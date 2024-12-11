@@ -1,4 +1,8 @@
 
+## 2.2.0+1
+December 11, 2024
+- flutter_lints: ^5.0.0
+
 ## 2.2.0
 December 05, 2024
 - Removed popup menu
